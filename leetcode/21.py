@@ -16,18 +16,9 @@ def merge_two_lists(list1, list2):
             tail = list2
             list2 = list2.next
 
-        tail.next = None
-
-    while list1:
+    if list1:
         tail.next = list1
-        tail = list1
-        list1 = list1.next
-        tail.next = None
-
-    while list2:
+    else:
         tail.next = list2
-        tail = list2
-        list2 = list2.next
-        tail.next = None
 
     return head.next
