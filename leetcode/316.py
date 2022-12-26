@@ -9,5 +9,3 @@ def remove_duplicate_letters(s):
             stack.append(char)
 
     return ''.join(stack)
-
-print(remove_duplicate_letters('abacb'))
