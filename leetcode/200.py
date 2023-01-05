@@ -1,43 +1,22 @@
+def dfs(grid, i, j, visited):
+    if i < 0 or i > len(grid) - 1 or j < 0 or j > len(grid[i]) - 1 or \
+        grid[i][j] != "1" or visited[i][j]:
+        return
 
-def dfs(graph, v):
-    graph[v]['visited'] = True
-    for w in graph[v]['adjacent_vertexes']:
-        if not graph[w]['visited']:
-            dfs(graph, w)
+    visited[i][j] = True
 
-def init_graph(grid):
-    graph = {}
-    for i in range(len(grid)):
-        for j in range(len(grid[i])):
-            if grid[i][j] != "1":
-                continue
-
-            graph[(i, j)] = {
-                'visited': False,
-                'adjacent_vertexes': [],
-            }
-
-            if i > 0 and grid [i - 1][j] == "1":
-                graph[(i, j)]['adjacent_vertexes'].append((i - 1, j))
-            
-            if i < len(grid) - 1 and grid[i + 1][j] == "1":
-                graph[(i, j)]['adjacent_vertexes'].append((i + 1, j))
-
-            if j > 0 and grid[i][j - 1] == "1":
-                graph[(i, j)]['adjacent_vertexes'].append((i, j - 1))
-
-            if j < len(grid[i]) - 1 and grid[i][j + 1] == "1":
-                graph[(i, j)]['adjacent_vertexes'].append((i, j + 1))
-
-    return graph
+    dfs(grid, i - 1, j, visited)
+    dfs(grid, i + 1, j, visited)
+    dfs(grid, i, j - 1, visited)
+    dfs(grid, i, j + 1, visited)
 
 def numIslands(grid):
-    graph = init_graph(grid)
     num = 0
+    visited = [[False for _ in row] for row in grid]
 
-    for vertex in graph.keys():
-        if not graph[vertex]['visited']:
-            dfs(graph, vertex)
-            num += 1
-
+    for i in range(len(grid)):
+        for j in range(len(grid[i])):
+            if grid[i][j] == "1" and not visited[i][j]:
+                dfs(grid, i, j, visited)
+                num += 1
     return num
